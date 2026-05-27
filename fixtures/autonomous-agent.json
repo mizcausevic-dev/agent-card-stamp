@@ -1,0 +1,26 @@
+{
+  "id": "deployment-orchestrator",
+  "name": "Deployment Orchestrator",
+  "version": "2.0.0",
+  "provider": "kineticgain",
+  "description": "Coordinates multi-cluster deploys with no human in the loop. Has rollback authority.",
+  "primary_purpose": "Autonomous deployment orchestration",
+  "models_used": [{ "model": "claude-opus-4", "role": "planner" }],
+  "tools": [
+    { "name": "deploy-to-cluster", "side_effects": "destructive" },
+    { "name": "rollback-deployment", "side_effects": "destructive" },
+    { "name": "fetch-build-artifact", "side_effects": "external" }
+  ],
+  "max_context_tokens": 200000,
+  "memory_persistence": "persistent",
+  "autonomy_level": "autonomous",
+  "refusal_taxonomy": [
+    { "category": "production-write-on-failure", "behavior": "escalate_to_human" }
+  ],
+  "evaluations": [
+    { "suite": "deploy-safety-canary-v2", "result_uri": "https://example.com/evals/d1.json", "ran_at": "2026-05-22T00:00:00Z", "passed": true }
+  ],
+  "environment": "production",
+  "status": "active",
+  "incident_response_uri": "https://example.com/incidents/deploy-orchestrator"
+}
